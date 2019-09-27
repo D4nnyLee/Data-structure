@@ -6,4 +6,6 @@
 
 *.pdf
 
+*.zip
+
 !makefile
