@@ -5,10 +5,11 @@
 #include <tuple>
 using namespace std;
 int n; // length of allElements
-vector<string> allElements; 
+vector<string> allElements;
 queue<tuple<vector<string>, int> > queueForSubsets;
 void recur() {
-	if (queueForSubsets.empty()) return;
+	if (queueForSubsets.empty())
+		return;
 	vector<string> subset;
 	int cur; // the index of the element that can be added to this subset
 	tie(subset, cur) = queueForSubsets.front();
@@ -16,10 +17,12 @@ void recur() {
 	int len = subset.size();
 	subset.push_back("");
 	// print subset
-	if (len == 0) cout << "{}";
+	if (len == 0)
+		cout << "{}";
 	else {
 		cout << '{' << subset[0];
-		for (int i = 1; i < len; i++) cout << ' ' << subset[i];
+		for (int i = 1; i < len; i++)
+			cout << ' ' << subset[i];
 		cout << '}';
 	}
 	// add new subsets by expending current subset
@@ -34,7 +37,8 @@ int main() {
 	while (getline(cin, s)) {
 		istringstream iss(s);
 		allElements.clear();
-		while (iss >> s) allElements.push_back(s); // split input with space
+		while (iss >> s)
+			allElements.push_back(s); // split input with space
 		n = allElements.size();
 		queueForSubsets.push({{}, 0}); // add empty set
 		recur();

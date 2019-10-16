@@ -4,10 +4,10 @@
 
 !*/
 
+exercise
+
 bin
 
 *.pdf
 
 *.zip
-
-!makefile
