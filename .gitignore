@@ -6,10 +6,20 @@
 
 exercise
 
+test
+
 bin
 
 *.pdf
 
 *.zip
 
+*.html
+
 a.out
+
+tmp
+
+*.txt
+
+.envrc

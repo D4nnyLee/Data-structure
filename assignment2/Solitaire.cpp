@@ -1,34 +1,40 @@
 #include <iostream>
 using namespace std;
 void displayArray(int *arr, int len) {
-	for (int i = 0; i < len; i++)
+	// cout << '+';
+	// for (int i = 0; i < len; i++) 
+	// 	if (arr[i] == 10)
+	// 		cout << "--+";
+	// 	else
+	// 		cout << "-+";
+	// cout << "\n|";
+	for (int i = 0; i < len; i++) {
 		switch (arr[i]) {
 			case 1:
-				cout << "A ";
-				break;
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-				cout << arr[i] << ' ';
+				cout << "A";
 				break;
 			case 11:
-				cout << "J ";
+				cout << "J";
 				break;
 			case 12:
-				cout << "Q ";
+				cout << "Q";
 				break;
 			case 13:
-				cout << "K ";
+				cout << "K";
 				break;
 			default:
-				cerr << "Wrong card number!\nHow can you do this?" << endl;
+				cout << arr[i];
 		}
+		// cout << '|';
+		cout << ' ';
+	}
+	// cout << "\n+";
+	// for (int i = 0; i < len; i++) 
+	// 	if (arr[i] == 10)
+	// 		cout << "--+";
+	// 	else
+	// 		cout << "-+";
+	// cout << endl << endl;
 	cout << endl;
 }
 int leftShiftArray(int *arr, int len) {

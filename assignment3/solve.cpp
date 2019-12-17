@@ -1,62 +1,72 @@
 #include <iostream>
+#include <map>
+
 using namespace std;
 
-class Queue {
-	public:
-		Queue(int n, char list[26][26]): head(new node) {
-			for (int i = 0; i < n; i++)
-                group[i] = '\x00';
-			for (int i = 0; i < n; i++)
-				for (int j = 0; j < 26 && list[i][j]; j++)
-                    group[list[i][j] - 'A'] = list[i][0];
-		}
-		void EnQueue(char newcomer) {
-            // find the position to insert
-			node *tmp = head;
-			while (tmp->next && (group[newcomer - 'A'] == '\x00' || group[tmp->next->id] != group[newcomer - 'A']))
-                tmp = tmp->next;
-            // insert new node
-            tmp->next = new node(newcomer - 'A', tmp->next);
-		}
-		char DeQueue() {
-            if (head->next == NULL)
-                return 0;
-            node *tmp = head;
-            head = head->next;
-            delete tmp;
-            return head->id + 'A';
-		}
+template <class ElementType>
+class LinkList {
 	private:
 		struct node {
-            int id;
+			ElementType element;
 			node *next;
-            node (): id(0), next(NULL) {}
-            node (int _id, node *_next): id(_id), next(_next) {}
+			node (): element(ElementType()), next(NULL) {}
+			node (ElementType e, node *n): element(e), next(n) {}
 		};
-		node *head;
-        char group[26];
+		node *header;
+        map<ElementType, int> group;
+	public:
+		LinkList (): header(new node()) {}
+
+        void GetGroup(int index, ElementType g[], int length) {
+            for (int i = 0; i < length; i++)
+                group[g[i]] = index;
+        }
+
+		void Enqueue(ElementType e) {
+            node *insert_position = header;
+            if (group.lower_bound(e) == group.end())
+                while (insert_position->next) insert_position = insert_position->next;
+            else
+                while (insert_position->next && (group.lower_bound(insert_position->next->element) == group.end() || group[insert_position->next->element] != group[e])) insert_position = insert_position->next;
+            insert_position->next = new node(e, insert_position->next);
+		}
+
+		void Dequeue() {
+            node *tmp = header;
+            header = header->next;
+            delete tmp;
+		}
+
+		ElementType front() {
+            if (!header->next)
+                return (ElementType)NULL;
+			return header->next->element;
+		}
 };
 
 int main(int argc, char const *argv[]) {
-	char list[26][26];
-	int n, m;
-	while (cin >> n) {
-		// initialize
-		for (int i = 0; i < n; i++)
-			for (int j = 0; j < 26; j++)
-				list[i][j] = 0;
-		// get the list of friend
-		for (int i = 0; i < n && cin >> m; i++)
-			for (int j = 0; j < m && cin >> list[i][j]; j++);
-		Queue q(n, list);
-        string operation;
-        char newcomer;
-        while (cin >> operation) {
-            if (operation == "ENQUEUE" && cin >> newcomer)
-                q.EnQueue(newcomer);
-            else if (operation == "DEQUEUE")
-                cout << q.DeQueue() << endl;
-        }
+	int NumGroup;
+    char persons[26];
+    LinkList<char> list;
+	cin >> NumGroup;
+	for (int group = 0; group < NumGroup; group++) {
+        int m;
+        cin >> m;
+        for (int i = 0; i < m; i++)
+            cin >> persons[i];
+        list.GetGroup(group, persons, m);
 	}
+    string operation;
+    while (cin >> operation) {
+        if (operation == "ENQUEUE") {
+            char person;
+            cin >> person;
+            list.Enqueue(person);
+        }
+        else if (operation == "DEQUEUE") {
+			cout << list.front() << '\n';
+            list.Dequeue();
+        }
+    }
 	return 0;
 }
