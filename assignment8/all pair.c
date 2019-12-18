@@ -30,13 +30,12 @@ int main() {
 		for (int k = 0; k < n; k++) {
 			for (int u = 0; u < n; u++) {
 				for (int v = 0; v < n; v++) {
-					int newLen = dist[u][k] + dist[k][v];
+					long long int newLen = (long long int)dist[u][k] + dist[k][v];
 					if (newLen < dist[u][v]) {
 						dist[u][v] = newLen;
 						next[u][v] = next[u][k];
 					}
 				}
-
 			}
 		}
 		for (int u = 0; u < n; u++) {
@@ -54,6 +53,12 @@ int main() {
 			}
 		}
 		putchar(10);
+		for (int i = 0; i < n; i++) {
+			free(dist[i]);
+			free(next[i]);
+		}
+		free(dist);
+		free(next);
 	}
 	return 0;
 }
